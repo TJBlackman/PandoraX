@@ -10,13 +10,17 @@ import SettingsButton from './components/settings/SettingsButton';
 import sendMessage from './utils/sendMessage';
 
 const songObjModel = {
+  station: '',
+  song: '',
+  artist: '',
   album: '',
   albumArt: '',
-  artist: '',
+  volume: 1,
   isThumbsUp: false,
-  song: '',
-  station: '',
-  volume: ''
+  isThumbsDown: false,
+  currentTime: 0,
+  duration: 0,
+  paused: false
 };
 
 
@@ -29,6 +33,8 @@ class App extends Component {
       song: songObjModel
     }
   }
+
+  resetSongInfo = () => this.setState({ song: songObjModel });
 
   updateCurrentSong = (song) => {
     this.setState({ song: song });
@@ -63,7 +69,7 @@ class App extends Component {
         <SettingsButton onClick={this.toggleSettings} />
         <SettingsPanel open={settingsPanelIsOpen} />
         <AlbumArt imgSrc={song.albumArt} />
-        <ControlsAndInfo song={song}/>
+        <ControlsAndInfo song={song} reset={this.resetSongInfo}/>
       </Wrapper>
     );
   }

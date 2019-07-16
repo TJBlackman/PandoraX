@@ -5,9 +5,9 @@ function SongInfo(props) {
     const { album, song, artist } = props.song;
     return (
         <Wrapper>
-            <p><label>Song: </label>{song || 'Unknown Song'}</p>
-            <p><label>Artist: </label>{artist || 'Unknown Artist'}</p>
-            <p><label>Album: </label>{album || 'Unknown Album'}</p>
+            <p><label>Song: </label>{song || 'Loading song...'}</p>
+            <p><label>Artist: </label>{artist || 'Loading artist...'}</p>
+            <p><label>Album: </label>{album || 'Loading album...'}</p>
         </Wrapper>
     )
 }

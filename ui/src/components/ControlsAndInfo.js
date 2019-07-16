@@ -10,9 +10,9 @@ class ControlsAndInfo extends Component {
     render(){
         return (
             <Wrapper>
-                <ProgressBar />
+                <ProgressBar song={this.props.song} />
                 <SongInfo song={this.props.song} />
-                <PlayerControls song={this.props.song} />
+                <PlayerControls song={this.props.song} reset={this.props.reset} />
             </Wrapper>
         ); 
     }

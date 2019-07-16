@@ -22,7 +22,7 @@ window.addEventListener('load', function(){
         }
     }
 
-    const PandoraX = {
+    const PandoraCommands = {
         skip: function(){
             const audioTag = getLastAudioTag();
             audioTag.currentTime = audioTag.duration;
@@ -64,6 +64,18 @@ window.addEventListener('load', function(){
             const audioTag = getLastAudioTag(); 
             audioTag.playbackRate = speed;
         },
+        thumbsup: () => {
+            const btn = document.querySelector('[data-qa="thumbs_up_button"]');
+            if (btn) {
+                btn.click();
+            }
+        },
+        thumbsdown: () => {
+            const btn = document.querySelector('[data-qa="thumbs_down_button"]');
+            if (btn) {
+                btn.click();
+            }
+        },
         download: function(){
             let song = {
                 song: 'Unkown song',
@@ -104,7 +116,7 @@ window.addEventListener('load', function(){
             const albumName = nowPlayingCenterWrapper.querySelector('.nowPlayingTopInfo__current__albumName').innerText;
             const albumArt = nowPlayingCenterWrapper.querySelector('.nowPlayingTopInfo__artContainer__art').style.backgroundImage.replace(/url\("|"\)/g,'');
             const isThumbsUp = document.querySelector('[data-qa="thumbs_up_button"]').className.includes('ThumbUpButton--active');
-            const songLength = document.querySelector('[data-qa="remaining_time"]').innerText;
+            const isThumbsDown = document.querySelector('[data-qa="thumbs_down_button"]').className.includes('ThumbUpButton--active');
             const volume = document.querySelector('[data-qa="volume_slider_handle"').attributes['aria-valuenow'].value;
 
             const audioTag = getLastAudioTag();
@@ -115,9 +127,9 @@ window.addEventListener('load', function(){
                 artist: artistName,
                 album: albumName,
                 albumArt: albumArt,
-                songLength: songLength,
                 volume: volume,
                 isThumbsUp: isThumbsUp,
+                isThumbsDown: isThumbsDown,
                 currentTime: audioTag.currentTime,
                 duration: audioTag.duration,
                 paused: audioTag.paused
@@ -190,7 +202,6 @@ window.addEventListener('load', function(){
     (function attachAdListener() {
         try {
             const observer = new MutationObserver((arrayOfMutations) => {
-                console.log('Observer: Checking for audio advertisement. '+ new Date().toLocaleTimeString())        
                 const isAd = checkIfIsAd();
                 if (!isAd) { return; }
     
@@ -198,8 +209,7 @@ window.addEventListener('load', function(){
                 if (!addedAudioElement){ return; }
     
                 const skipAd = () => {
-                    PandoraX.skip();
-                    console.log(`PandoraX skipped an audio advertisement! ${new Date().toLocaleTimeString()}`);
+                    PandoraCommands.skip();
                     audioTag.removeEventListener('loadedmetadata', skipAd, false);
                 }; 
     
@@ -211,38 +221,46 @@ window.addEventListener('load', function(){
             console.log('attachAdListener is running!')
         } 
         catch(err){
-            console.log('Retrying attachAdListener in 1000ms....')
             return setTimeout(attachAdListener, 1000);
         }
     })();
 
     // extension listener
     chrome.runtime.onMessage.addListener(function(request, sender) {
-        console.log(request);
-        console.log(sender);
         switch(request.type){
             case 'GET SONG INFO': {
                 sendSongInfo();
                 break;
             };
-            case 'thumbsdown': {}
-            case 'replay': { PandoraX.replay(); break; }
+            case 'replay': { PandoraCommands.replay(); break; }
             case 'pause': { 
-                PandoraX.pause(); 
+                PandoraCommands.pause(); 
                 sendSongInfo();
                 break; 
             }
             case 'play': { 
-                PandoraX.play(); 
+                PandoraCommands.play(); 
                 sendSongInfo();
                 break; 
             }
-            case 'next': { PandoraX.skip(); sendSongInfo(); break; }
-            case 'thumbsup': { }
-            case 'download': { PandoraX.download(); break; }
+            case 'next': { 
+                PandoraCommands.skip(); 
+                break; 
+            }
+            case 'thumbsup': { 
+                PandoraCommands.thumbsup(); 
+                sendSongInfo(); 
+                break; 
+            }
+            case 'thumbsdown': { 
+                PandoraCommands.thumbsdown(); 
+                break; 
+            }
+            case 'download': { 
+                PandoraCommands.download(); 
+                break; 
+            }
             default: return null;
         }   
     });
-
-    this.console.log(chrome.runtime.id);
 });

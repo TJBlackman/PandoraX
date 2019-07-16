@@ -10,7 +10,10 @@ const AlbumSvgSpinner = () => (
 class AlbumImage extends Component {
 
     render(){
-        const src = this.props.imgSrc;
+        let src = this.props.imgSrc;
+        if (src.length > 0 && src.includes('http') === false){
+            src = "https://www.pandora.com" + src;
+        }
         return (
             <Wrapper imgSrc={src}>
                 {

@@ -16,8 +16,8 @@ function IconButton(props) {
     switch(props.icon){
         case 'thumbsup':            { SvgIcon = Thumpsup; break; }
         case 'thumpsupconfirmed':   { SvgIcon = Thumpsupconfirmed; break; }
-        case 'thumpsdown':          { SvgIcon = Thumbsdown; break; }
-        case 'thumpsdownconfirmed': { SvgIcon = Thumbsdownconfirmed; break; }
+        case 'thumbsdown':          { SvgIcon = Thumbsdown; break; }
+        case 'thumbsdownconfirmed': { SvgIcon = Thumbsdownconfirmed; break; }
         case 'replay':              { SvgIcon = Replay; break; }
         case 'pause':               { SvgIcon = Pause; break; }
         case 'play':                { SvgIcon = Play; break; }

@@ -8,18 +8,19 @@ import sendMessage from '../../utils/sendMessage'
 export default class PlayerControls extends Component {
 
     render() {
-        console.log(this.props.song)
+        console.log(this.props.song);
+        const { song, reset } = this.props; 
         return (
             <Wrapper>
-                <Button icon="thumpsdown" onClick={() => { sendMessage({type:'thumbsdown'}) }} />
+                <Button icon={song.isThumbsDown ? 'thumbsdownconfirmed' : 'thumbsdown'} onClick={() => { sendMessage({type:'thumbsdown'}); reset(); }} />
                 <Button icon="replay" onClick={() => { sendMessage({type:'replay'}) }} />
                 {
-                    this.props.song.paused
+                    song.paused
                         ? <Button icon="play" onClick={() => { sendMessage({type:'play'}) }} />
                         : <Button icon="pause" onClick={() => { sendMessage({type:'pause'}) }} />
                 }
-                <Button icon="next" onClick={() => { sendMessage({type:'next'}) }} />
-                <Button icon="thumbsup" onClick={() => { sendMessage({type:'thumbsup'}) }} />
+                <Button icon="next" onClick={() => { sendMessage({type:'next'}); reset(); }} />
+                <Button icon={song.isThumbsUp ? 'thumpsupconfirmed' : 'thumbsup'} onClick={() => { sendMessage({type:'thumbsup'}) }} />
                 <Button icon="download" onClick={() => { sendMessage({type:'download'}) }} />
             </Wrapper>
         )

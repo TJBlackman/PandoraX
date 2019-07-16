@@ -29,6 +29,7 @@ const Wrapper = styled.div`
             fill: white; 
             height: 20px; 
             width: 20px; 
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.75));
         }
     }
 `;
