@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "Pandora X",
+    "version": "0.0.1",
+
+    "description": "The PandoraX extension allows you to control your Pandora station from any tab. It will keep Pandora playing forever. It grants you unlimited skips, single and unlimited song replays, and song downloads.",
+    
+    "browser_action": {
+        "default_title": "Pandora X",
+        "default_popup": "./ui/build/index.html"
+    },
+
+    "permissions": ["tabs"],
+    "content_scripts": [{
+        "matches": ["*://www.pandora.com/*","*://pandora.com/*"],
+        "js": ["./client_scripts/index.js"]
+    }]
+}
