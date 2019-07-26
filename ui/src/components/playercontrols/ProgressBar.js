@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export default class ProgressBar extends Component {
 
     state = {
-        currentTime: 0
+        percentThroughSong: 0
     }; 
 
     interval; 
@@ -18,34 +18,45 @@ export default class ProgressBar extends Component {
     }; 
 
     componentDidUpdate(prevProps){
-        if (this.props.song.song === prevProps.song.song){ return; }
+        if (this.props.song === prevProps.song){
+            return; 
+        }
         clearInterval(this.interval);
+        this.resetSlider();
         this.startSlider();
     }
 
     startSlider = () => {
         const { song } = this.props; 
-        const currentTime = song.currentTime / song.duration;        
-
-        if (isNaN(currentTime)){
-            return this.setState({ currentTime: 0 })
+        if (song.paused){
+            return; 
         }
 
-        this.setState({ currentTime });
-
-        const step = 100;
-        const incrementSlider = step / (song.duration * 1000); 
+        const animationInterval = 100;
+        const incrementSlider = animationInterval / (song.duration * 1000); 
 
         this.interval = setInterval(() => {
-            this.setState({ currentTime: this.state.currentTime + incrementSlider }); 
-        }, step);
+            this.setState({ percentThroughSong: this.state.percentThroughSong + incrementSlider }); 
+        }, animationInterval);
+    }; 
+
+    pauseSlider = () => clearInterval(this.interval);
+    resetSlider = () => {
+        try {
+            const { song } = this.props; 
+            this.setState({ percentThroughSong: song.currentTime / song.duration });
+        }
+        catch(err){
+            console.log(err);
+            this.setState({ percentThroughSong: 0 });
+        }
     }
 
 
     render() {
-        const { currentTime } = this.state; 
+        const { percentThroughSong } = this.state; 
         return (
-            <Wrapper currentTime={currentTime}></Wrapper>
+            <Wrapper percentThroughSong={percentThroughSong}></Wrapper>
         )
     }
 }
@@ -68,7 +79,7 @@ const Wrapper = styled.div`
         background-color: white;
         border-top-right-radius: 99px;
         border-bottom-right-radius: 99px;
-        transform: ${props => `scaleX(${props.currentTime || 0.5})`}; 
+        transform: ${props => `scaleX(${props.percentThroughSong || 1})`}; 
         transform-origin: left;
     }
 `;

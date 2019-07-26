@@ -7,9 +7,6 @@ window.addEventListener('load', function(){
 
     const extensionId = chrome.runtime.id;
 
-    // // https://www.npmjs.com/package/downloadjs | Thanks @rndme <3 
-    ;(function(root,factory){typeof define=="function"&&define.amd?define([],factory):typeof exports=="object"?module.exports=factory():root.PandoraXDownload=factory()})(this,function(){return function download(data,strFileName,strMimeType){var self=window,defaultMime="application/octet-stream",mimeType=strMimeType||defaultMime,payload=data,url=!strFileName&&!strMimeType&&payload,anchor=document.createElement("a"),toString=function(a){return String(a)},myBlob=self.Blob||self.MozBlob||self.WebKitBlob||toString,fileName=strFileName||"download",blob,reader;myBlob=myBlob.call?myBlob.bind(self):Blob,String(this)==="true"&&(payload=[payload,mimeType],mimeType=payload[0],payload=payload[1]);if(url&&url.length<2048){fileName=url.split("/").pop().split("?")[0],anchor.href=url;if(anchor.href.indexOf(url)!==-1){var ajax=new XMLHttpRequest;return ajax.open("GET",url,!0),ajax.responseType="blob",ajax.onload=function(e){download(e.target.response,fileName,defaultMime)},setTimeout(function(){ajax.send()},0),ajax}}if(/^data:([\w+-]+\/[\w+.-]+)?[,;]/.test(payload)){if(!(payload.length>2096103.424&&myBlob!==toString))return navigator.msSaveBlob?navigator.msSaveBlob(dataUrlToBlob(payload),fileName):saver(payload);payload=dataUrlToBlob(payload),mimeType=payload.type||defaultMime}else if(/([\x80-\xff])/.test(payload)){var i=0,tempUiArr=new Uint8Array(payload.length),mx=tempUiArr.length;for(i;i<mx;++i)tempUiArr[i]=payload.charCodeAt(i);payload=new myBlob([tempUiArr],{type:mimeType})}blob=payload instanceof myBlob?payload:new myBlob([payload],{type:mimeType});function dataUrlToBlob(strUrl){var parts=strUrl.split(/[:;,]/),type=parts[1],indexDecoder=strUrl.indexOf("charset")>0?3:2,decoder=parts[indexDecoder]=="base64"?atob:decodeURIComponent,binData=decoder(parts.pop()),mx=binData.length,i=0,uiArr=new Uint8Array(mx);for(i;i<mx;++i)uiArr[i]=binData.charCodeAt(i);return new myBlob([uiArr],{type:type})}function saver(url,winMode){if("download"in anchor)return anchor.href=url,anchor.setAttribute("download",fileName),anchor.className="download-js-link",anchor.innerHTML="downloading...",anchor.style.display="none",anchor.addEventListener("click",function(e){e.stopPropagation(),this.removeEventListener("click",arguments.callee)}),document.body.appendChild(anchor),setTimeout(function(){anchor.click(),document.body.removeChild(anchor),winMode===!0&&setTimeout(function(){self.URL.revokeObjectURL(anchor.href)},250)},66),!0;if(/(Version)\/(\d+)\.(\d+)(?:\.(\d+))?.*Safari\//.test(navigator.userAgent))return/^data:/.test(url)&&(url="data:"+url.replace(/^data:([\w\/\-\+]+)/,defaultMime)),window.open(url)||confirm("Displaying New Document\n\nUse Save As... to download, then click back to return to this page.")&&(location.href=url),!0;var f=document.createElement("iframe");document.body.appendChild(f),!winMode&&/^data:/.test(url)&&(url="data:"+url.replace(/^data:([\w\/\-\+]+)/,defaultMime)),f.src=url,setTimeout(function(){document.body.removeChild(f)},333)}if(navigator.msSaveBlob)return navigator.msSaveBlob(blob,fileName);if(self.URL)saver(self.URL.createObjectURL(blob),!0);else{if(typeof blob=="string"||blob.constructor===toString)try{return saver("data:"+mimeType+";base64,"+self.btoa(blob))}catch(y){return saver("data:"+mimeType+","+encodeURIComponent(blob))}reader=new FileReader,reader.onload=function(e){saver(this.result)},reader.readAsDataURL(blob)}return!0}});
-
     const getLastAudioTag = () => document.querySelector('body > audio:last-of-type');
     const checkIfIsAd = () => {
         try {
@@ -57,9 +54,6 @@ window.addEventListener('load', function(){
             const audioTag = getLastAudioTag(); 
             audioTag.pause();
         },
-        getCurentAudio: function(){ // returns last <audio /> element
-            return getLastAudioTag(); 
-        },
         playbackRate: function(speed){ // 1 is normal, 1.5 is 150%
             const audioTag = getLastAudioTag(); 
             audioTag.playbackRate = speed;
@@ -78,29 +72,22 @@ window.addEventListener('load', function(){
         },
         download: function(){
             let song = {
-                song: 'Unkown song',
-                artist: 'Unkown Artist'
+                song: 'Unknown song',
+                artist: 'Unknown Artist',
+                src: undefined
             };
-            let audioTag; 
             try {
-                audioTag = getLastAudioTag(); 
                 song = getSongData();
             }
             catch(err){
                 console.log(err);
             }
 
-            if (audioTag){
-                setTimeout(() => {
-                    fetch(audioTag.src,{
-                        method: 'GET'
-                    })
-                        .then(x => x.blob())
-                        .then(x => window.PandoraXDownload(x, `${song.song} by ${song.artist}`))
-                }, 100)
-            } else {
-                alert('could not get song.....')
-            }
+            // send to bg script
+            chrome.runtime.sendMessage(extensionId, {
+                type: 'download this song',
+                payload: song
+            });
         }
     }
 
@@ -132,7 +119,8 @@ window.addEventListener('load', function(){
                 isThumbsDown: isThumbsDown,
                 currentTime: audioTag.currentTime,
                 duration: audioTag.duration,
-                paused: audioTag.paused
+                paused: audioTag.paused,
+                src: audioTag.src
             };
         }
         catch(err){
@@ -140,7 +128,7 @@ window.addEventListener('load', function(){
         }
     };
 
-    const sendSongInfo = () => {
+    const refreshCurrentSongInfo = () => {
         const songData = getSongData();
         chrome.runtime.sendMessage(extensionId, {
             type: 'new song',
@@ -155,7 +143,7 @@ window.addEventListener('load', function(){
             const observer_target = document.querySelector('.nowPlayingTopInfo__artContainer').parentElement;
             const observer = new MutationObserver((mutations) => {
                 console.log('Observer: Song has changed. '+ new Date().toLocaleTimeString())
-                sendSongInfo();
+                refreshCurrentSongInfo();
             });
     
             const observer_options = { childList: false, subtree: true, attributes: true }
@@ -208,13 +196,13 @@ window.addEventListener('load', function(){
                 const addedAudioElement = arrayOfMutations.some(mutation => Array.from(mutation.addedNodes).some(node => node.tagName.toLowerCase() === "audio"));
                 if (!addedAudioElement){ return; }
     
-                const skipAd = () => {
+                const skipAudioAd = () => {
                     PandoraCommands.skip();
-                    audioTag.removeEventListener('loadedmetadata', skipAd, false);
+                    audioTag.removeEventListener('loadedmetadata', skipAudioAd, false);
                 }; 
     
                 const audioTag = getLastAudioTag();
-                audioTag.addEventListener('loadedmetadata', skipAd, false);
+                audioTag.addEventListener('loadedmetadata', skipAudioAd, false);
             });
             
             observer.observe(document.body, { childList: true }); 
@@ -224,23 +212,51 @@ window.addEventListener('load', function(){
             return setTimeout(attachAdListener, 1000);
         }
     })();
+    
+    // listen for video ads
+    (function attachVideoAdListener() {
+        const target = document.getElementById('adContainer');
+        try {
+            const observer = new MutationObserver((arrayOfMutations) => {
+                const videoTags = target.querySelectorAll('[title="Advertisement"]'); 
+                videoTags.forEach(video => {
+                    const skipVideoAd = () => {
+                        video.currentTime = video.duration;
+                        video.removeEventListener('loadedmetadata', skipVideoAd, false);
+                    }; 
+        
+                    video.addEventListener('loadedmetadata', skipVideoAd, false);
+                }); 
+            });
+            
+            observer.observe(target, { childList: true, subtree: false }); 
+            console.log('attachAdListener is running!')
+        } 
+        catch(err){
+            return setTimeout(attachVideoAdListener, 1000);
+        }
+    })();
 
     // extension listener
     chrome.runtime.onMessage.addListener(function(request, sender) {
         switch(request.type){
             case 'GET SONG INFO': {
-                sendSongInfo();
+                refreshCurrentSongInfo();
                 break;
             };
-            case 'replay': { PandoraCommands.replay(); break; }
+            case 'replay': { 
+                PandoraCommands.replay(); 
+                refreshCurrentSongInfo();
+                break; 
+            }
             case 'pause': { 
                 PandoraCommands.pause(); 
-                sendSongInfo();
+                refreshCurrentSongInfo();
                 break; 
             }
             case 'play': { 
                 PandoraCommands.play(); 
-                sendSongInfo();
+                refreshCurrentSongInfo();
                 break; 
             }
             case 'next': { 
@@ -249,7 +265,7 @@ window.addEventListener('load', function(){
             }
             case 'thumbsup': { 
                 PandoraCommands.thumbsup(); 
-                sendSongInfo(); 
+                refreshCurrentSongInfo(); 
                 break; 
             }
             case 'thumbsdown': { 

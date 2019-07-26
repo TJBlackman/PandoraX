@@ -10,9 +10,13 @@
         "default_popup": "./ui/build/index.html"
     },
 
-    "permissions": ["tabs"],
+    "permissions": ["tabs","downloads"],
     "content_scripts": [{
         "matches": ["*://www.pandora.com/*","*://pandora.com/*"],
         "js": ["./client_scripts/index.js"]
-    }]
+    }],
+    "background": {
+        "scripts": ["./background_scripts/index.js"],
+        "persistent": false
+    }
 }
