@@ -16,14 +16,18 @@ export default class SettingsPanel extends Component {
 const Wrapper = styled.div`
     display: inline;
     position: absolute; 
-    top: 5px; 
+    top: 0; 
     right: 0; 
     z-index: 19;
 
     > button {
-        border: none; 
+        border: none;
         background-color: transparent;
-        cursor: pointer; 
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        outline: 0;
 
         svg {
             fill: white; 

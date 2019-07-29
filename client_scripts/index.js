@@ -148,7 +148,7 @@ window.addEventListener('load', function(){
     
             const observer_options = { childList: false, subtree: true, attributes: true }
             observer.observe(observer_target, observer_options); 
-            console.log('attachSongChangeListener is running!');
+            console.log('watching for song change');
             
             const songData = getSongData();
             chrome.runtime.sendMessage(extensionId, {
@@ -157,7 +157,6 @@ window.addEventListener('load', function(){
             });
 
         } catch(err){
-            console.log('Retrying attachSongChangeListener in 1000ms....')
             return setTimeout(attachSongChangeListener, 1000);
         }
     })();
@@ -166,10 +165,8 @@ window.addEventListener('load', function(){
     (function attachStillListeningListener() {
         try {
             const observer = new MutationObserver((arrayOfMutations) => {
-                console.log('Observer: Are you still listening? '+ new Date().toLocaleTimeString())
                 let btn = document.querySelector('[data-qa="keep_listening_button"]');
                 if (btn) { 
-                    console.log('Clicking "Im still listening." '+ new Date().toLocaleTimeString())
                     btn.click(); 
                 }
             });
@@ -178,10 +175,9 @@ window.addEventListener('load', function(){
             const observer_options = { childList: true, subtree: true }
             
             observer.observe(observer_target, observer_options);
-            console.log('attachStillListeningListener is running!')
+            console.log('watching for "Are you still listening" popup')
         }
         catch(err){
-            console.log('Retrying attachStillListeningListener in 1000ms....')
             return setTimeout(attachStillListeningListener, 1000);
         } 
     })();
@@ -206,7 +202,7 @@ window.addEventListener('load', function(){
             });
             
             observer.observe(document.body, { childList: true }); 
-            console.log('attachAdListener is running!')
+            console.log('watching for audio ads')
         } 
         catch(err){
             return setTimeout(attachAdListener, 1000);
@@ -221,16 +217,16 @@ window.addEventListener('load', function(){
                 const videoTags = target.querySelectorAll('[title="Advertisement"]'); 
                 videoTags.forEach(video => {
                     const skipVideoAd = () => {
+                        video.volume = 0;
                         video.currentTime = video.duration;
-                        video.removeEventListener('loadedmetadata', skipVideoAd, false);
-                    }; 
-        
-                    video.addEventListener('loadedmetadata', skipVideoAd, false);
+                        video.removeEventListener('play', skipVideoAd, false);
+                    };
+                    video.addEventListener('play', skipVideoAd, false);
                 }); 
             });
             
-            observer.observe(target, { childList: true, subtree: false }); 
-            console.log('attachAdListener is running!')
+            observer.observe(target, { childList: true, subtree: true }); 
+            console.log('watching for video ads')
         } 
         catch(err){
             return setTimeout(attachVideoAdListener, 1000);

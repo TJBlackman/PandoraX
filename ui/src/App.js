@@ -1,5 +1,9 @@
 import React, { Component, Suspense } from 'react';
 import styled from 'styled-components';
+import { ThemeProvider } from 'styled-components';
+
+import Theme, { GlobalStyles } from './utils/Theme';
+
 
 import AlbumArtAndSettings from './components/AlbumArtAndSettings';
 import AlbumArt from './components/albumart/AlbumImage'
@@ -65,12 +69,21 @@ class App extends Component {
   render() {
     const { settingsPanelIsOpen, song } = this.state; 
     return (
-      <Wrapper>
-        <SettingsButton onClick={this.toggleSettings} />
-        <SettingsPanel open={settingsPanelIsOpen} />
-        <AlbumArt imgSrc={song.albumArt} />
-        <ControlsAndInfo song={song} reset={this.resetSongInfo}/>
-      </Wrapper>
+      <ThemeProvider theme={Theme}>
+        <>
+          <GlobalStyles />
+          {/* <Provider store={store}> */}
+
+            <Wrapper>
+              <SettingsButton onClick={this.toggleSettings} />
+              <SettingsPanel open={settingsPanelIsOpen} />
+              <AlbumArt imgSrc={song.albumArt} />
+              <ControlsAndInfo song={song} reset={this.resetSongInfo}/>
+            </Wrapper>
+
+          {/* </Provider> */}
+        </>   
+      </ThemeProvider>
     );
   }
 }
