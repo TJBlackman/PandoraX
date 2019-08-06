@@ -12,6 +12,7 @@ import SettingsPanel from './components/settings/SettingsPanel';
 import SettingsButton from './components/settings/SettingsButton';
 
 import sendMessage from './utils/sendMessage';
+import ContextProvider from './context/providerComposer'
 
 const songObjModel = {
   station: '',
@@ -70,19 +71,18 @@ class App extends Component {
     const { settingsPanelIsOpen, song } = this.state; 
     return (
       <ThemeProvider theme={Theme}>
-        <>
+        <ContextProvider>
+
           <GlobalStyles />
-          {/* <Provider store={store}> */}
-
-            <Wrapper>
-              <SettingsButton onClick={this.toggleSettings} />
-              <SettingsPanel open={settingsPanelIsOpen} />
-              <AlbumArt imgSrc={song.albumArt} />
-              <ControlsAndInfo song={song} reset={this.resetSongInfo}/>
-            </Wrapper>
-
-          {/* </Provider> */}
-        </>   
+          
+          <Wrapper>
+            <SettingsButton onClick={this.toggleSettings} />
+            <SettingsPanel open={settingsPanelIsOpen} />
+            <AlbumArt imgSrc={song.albumArt} />
+            <ControlsAndInfo song={song} reset={this.resetSongInfo}/>
+          </Wrapper>
+          
+        </ContextProvider>   
       </ThemeProvider>
     );
   }

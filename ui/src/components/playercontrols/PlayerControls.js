@@ -1,31 +1,43 @@
-import React, { Component } from 'react'; 
+import React, { useContext } from 'react'; 
 import styled from 'styled-components';
+
+import { SongContext } from '../../context/song.context'
 
 import Button from '../buttonsAndIcons/Button';
 
 import sendMessage from '../../utils/sendMessage'
 
-export default class PlayerControls extends Component {
+const PlayerControls = () => {
+    const { song } = useContext(SongContext);
 
-    render() {
-        console.log(this.props.song);
-        const { song, reset } = this.props; 
-        return (
-            <Wrapper>
-                <Button icon={song.isThumbsDown ? 'thumbsdownconfirmed' : 'thumbsdown'} onClick={() => { sendMessage({type:'thumbsdown'}); reset(); }} />
-                <Button icon="replay" onClick={() => { sendMessage({type:'replay'}) }} />
-                {
-                    song.paused
-                        ? <Button icon="play" onClick={() => { sendMessage({type:'play'}) }} />
-                        : <Button icon="pause" onClick={() => { sendMessage({type:'pause'}) }} />
-                }
-                <Button icon="next" onClick={() => { sendMessage({type:'next'}); reset(); }} />
-                <Button icon={song.isThumbsUp ? 'thumpsupconfirmed' : 'thumbsup'} onClick={() => { sendMessage({type:'thumbsup'}) }} />
-                <Button icon="download" onClick={() => { sendMessage({type:'download'}) }} />
-            </Wrapper>
-        )
-    }
-}; 
+    const thumbsDownIcon = song.isThumbsDown ? 'thumbsdownconfirmed' : 'thumbsdown';
+    const thumbsUpIcon = song.isThumbsUp ? 'thumpsupconfirmed' : 'thumbsup'
+    const thumbsDown = () => sendMessage({type:'thumbsdown'});
+    const replay = () => sendMessage({type:'replay'});
+    const play = () => { sendMessage({type:'play'}) }
+    const pause = () => { sendMessage({type:'pause'}) }
+    const next = () => { sendMessage({type:'next'}); }
+    const thumbsUp = () => { sendMessage({type:'thumbsup'}) }
+    const download = () => { sendMessage({type:'download'}) }
+
+
+    return (
+        <Wrapper>
+            <Button icon={thumbsDownIcon} onClick={thumbsDown} />
+            <Button icon="replay" onClick={replay} />
+            {
+                song.paused
+                    ? <Button icon="play" onClick={play} />
+                    : <Button icon="pause" onClick={pause} />
+            }
+            <Button icon="next" onClick={next} />
+            <Button icon={thumbsUpIcon} onClick={thumbsUp} />
+            <Button icon="download" onClick={download} />
+        </Wrapper>
+    )
+};
+
+export default PlayerControls; 
 
 const Wrapper = styled.div`
     display: flex; 
