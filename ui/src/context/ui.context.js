@@ -3,15 +3,21 @@ import React, { useState, createContext } from "react";
 export const UIContext = createContext();
 
 const default_context = {
-  menuOpen: false
+  menuIsOpen: true
 };
 
 export const UIProvider = ({ children }) => {
-  const [ui, setUi] = useState(default_context);
+  const [ui, setUI] = useState(default_context);
+
+  const toggle_menu = () => setUI({
+    ...ui, 
+    menuIsOpen: !ui.menuIsOpen
+  });
 
   const providerValue = {
-    ui: ui,
-    setUi: setUi
+    ui,
+    toggle_menu: toggle_menu,
+    setUI
   };
 
   return (

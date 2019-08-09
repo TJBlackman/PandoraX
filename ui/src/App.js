@@ -17,7 +17,7 @@ const App = () => {
 
 
   useEffect(() => {
-    if (!window.chrome.runtime.onMessage){ return false; }
+    if (!window.chrome.runtime.onMessage){ return undefined; }
     
     const listener = (request) => {
       switch(request.type){

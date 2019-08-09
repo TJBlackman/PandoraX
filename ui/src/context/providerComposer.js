@@ -3,6 +3,7 @@ import React from 'react';
 // https://gist.github.com/stolinski/2d9545e19dd67bda64143cb1aae04ac0
 
 import { SongProvider } from './song.context'; 
+import { UIProvider } from './ui.context';
 
 function ProviderComposer({ contexts, children }) {
   return contexts.reduceRight(
@@ -16,7 +17,7 @@ function ProviderComposer({ contexts, children }) {
 
 function ContextProvider({ children }) {
   return (
-    <ProviderComposer contexts={[<SongProvider />]} >
+    <ProviderComposer contexts={[<SongProvider />, <UIProvider />]} >
       {children}
     </ProviderComposer>
   );

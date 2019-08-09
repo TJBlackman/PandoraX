@@ -1,13 +1,16 @@
-import React from 'react'; 
+import React, { useContext } from 'react'; 
 import styled from 'styled-components';
+
+import { UIContext } from '../../context/ui.context'; 
 
 import Button from '../buttonsAndIcons/Button';
 
 const SettingsPanel = (props) => {
+    const { toggle_menu } = useContext(UIContext);
     
     return (
         <Wrapper>
-            <Button icon="gear" onClick={props.onClick}/>
+            <Button icon="gear" onClick={toggle_menu}/>
         </Wrapper>
     )
 }; 
