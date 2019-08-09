@@ -1,17 +1,15 @@
-import React, { Component } from 'react'; 
+import React, { useContext } from 'react'; 
 import styled from 'styled-components';
 
-import Button from '../buttonsAndIcons/Button';
+const SettingsPanel = () => {
+    return (
+        <Wrapper>
+            
+        </Wrapper>
+    )
+}; 
 
-export default class SettingsPanel extends Component {
-    render() {
-        return (
-            <Wrapper>
-                
-            </Wrapper>
-        )
-    }
-}
+export default SettingsPanel;
 
 const Wrapper = styled.div`
     position: absolute; 

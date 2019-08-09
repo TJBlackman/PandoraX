@@ -20,6 +20,6 @@ function ContextProvider({ children }) {
       {children}
     </ProviderComposer>
   );
-}
+} 
 
 export default ContextProvider; 

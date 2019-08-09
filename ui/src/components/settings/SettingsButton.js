@@ -1,17 +1,18 @@
-import React, { Component } from 'react'; 
+import React from 'react'; 
 import styled from 'styled-components';
 
 import Button from '../buttonsAndIcons/Button';
 
-export default class SettingsPanel extends Component {
-    render() {
-        return (
-            <Wrapper>
-                <Button icon="gear" onClick={this.props.onClick}/>
-            </Wrapper>
-        )
-    }
-}
+const SettingsPanel = (props) => {
+    
+    return (
+        <Wrapper>
+            <Button icon="gear" onClick={props.onClick}/>
+        </Wrapper>
+    )
+}; 
+
+export default SettingsPanel;
 
 const Wrapper = styled.div`
     display: inline;

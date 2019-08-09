@@ -1,92 +1,54 @@
-import React, { Component, Suspense } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { ThemeProvider } from 'styled-components';
 
-import Theme, { GlobalStyles } from './utils/Theme';
+import { SongContext } from './context/song.context';
 
-
-import AlbumArtAndSettings from './components/AlbumArtAndSettings';
 import AlbumArt from './components/albumart/AlbumImage'
 import ControlsAndInfo from './components/ControlsAndInfo';
 import SettingsPanel from './components/settings/SettingsPanel';
 import SettingsButton from './components/settings/SettingsButton';
 
 import sendMessage from './utils/sendMessage';
-import ContextProvider from './context/providerComposer'
-
-const songObjModel = {
-  station: '',
-  song: '',
-  artist: '',
-  album: '',
-  albumArt: '',
-  volume: 1,
-  isThumbsUp: false,
-  isThumbsDown: false,
-  currentTime: 0,
-  duration: 0,
-  paused: false
-};
 
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    
-    this.state = {
-      settingsPanelIsOpen: true,
-      song: songObjModel
-    }
-  }
+const App = () => {
 
-  resetSongInfo = () => this.setState({ song: songObjModel });
+  const { setSong } = useContext(SongContext);
 
-  updateCurrentSong = (song) => {
-    this.setState({ song: song });
-  }
 
-  componentDidMount () {
+  useEffect(() => {
     if (!window.chrome.runtime.onMessage){ return false; }
-
-    sendMessage({type: 'GET SONG INFO'}, (res) => {
-      if (res) {
-        this.setState({ song: res });
-      }
-    });
-
-    window.chrome.runtime.onMessage.addListener((request) => {
+    
+    const listener = (request) => {
       switch(request.type){
         case 'new song': {
-          this.updateCurrentSong(request.payload); 
+          setSong(request.payload); 
           break; 
         }
         default: return null; 
       }
+    }
+
+    window.chrome.runtime.onMessage.addListener(listener);
+    
+    sendMessage({type: 'GET SONG INFO'}, (res) => {
+      if (res) {
+        setSong(res);
+      }
     });
-  }
 
-  toggleSettings = () => this.setState({ showSettings: !this.state.showSettings });
+  }, []); 
 
-  render() {
-    const { settingsPanelIsOpen, song } = this.state; 
-    return (
-      <ThemeProvider theme={Theme}>
-        <ContextProvider>
-
-          <GlobalStyles />
-          
-          <Wrapper>
-            <SettingsButton onClick={this.toggleSettings} />
-            <SettingsPanel open={settingsPanelIsOpen} />
-            <AlbumArt imgSrc={song.albumArt} />
-            <ControlsAndInfo song={song} reset={this.resetSongInfo}/>
-          </Wrapper>
-          
-        </ContextProvider>   
-      </ThemeProvider>
-    );
-  }
+  return (
+    <Wrapper>
+      <SettingsButton />
+      <SettingsPanel />
+      <AlbumArt />
+      <ControlsAndInfo />
+    </Wrapper>
+  );
 }
+
 
 export default App;
 

@@ -1,15 +1,22 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "manifest_version": 2,
+  "name": "Pandora X",
+  "version": "0.0.1",
+
+  "description": "The PandoraX extension allows you to control your Pandora station from any tab. It will keep Pandora playing forever. It grants you unlimited skips, single and unlimited song replays, and song downloads.",
+  
+  "browser_action": {
+      "default_title": "Pandora X",
+      "default_popup": "./index.html"
+  },
+
+  "permissions": ["tabs","downloads"],
+  "content_scripts": [{
+      "matches": ["*://www.pandora.com/*","*://pandora.com/*"],
+      "js": ["./client_scripts/index.js"]
+  }],
+  "background": {
+      "scripts": ["./background_scripts/index.js"],
+      "persistent": false
+  }
 }

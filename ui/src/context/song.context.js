@@ -4,25 +4,28 @@ export const SongContext = createContext();
 
 const default_context = {
   station: "",
-  song: "",
+  name: "",
   artist: "",
   album: "",
   albumArt: "",
   volume: 1,
   isThumbsUp: false,
   isThumbsDown: false,
-  currentTime: 0,
-  duration: 0,
+  currentTime: 1,
+  duration: 1,
   paused: false,
-  imgSrc: ""
+  src: ""
 };
 
 export const SongProvider = ({ children }) => {
-  const [state, setState] = useState(default_context);
+  const [song, setSong] = useState(default_context);
+
+  const clearSong = () => setSong(default_context);
 
   const providerValue = {
-    song: state,
-    setSong: setState
+    song: song,
+    setSong: setSong,
+    clearSong: clearSong
   };
 
   return (

@@ -1,15 +1,10 @@
-import React, { Component } from 'react'; 
-import styled from 'styled-components'; 
+import React from 'react'; 
 
-import AlbumArt from './albumart/AlbumImage'
+import AlbumArt from './albumart/AlbumImage';
 
-class AlbumArtAndSettings extends Component {
+const AlbumArtAndSettings = () => {
 
-    render(){
-        return (
-            <AlbumArt />
-        );
-    }
+    return <AlbumArt />;
 }
 
 export default AlbumArtAndSettings;

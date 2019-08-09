@@ -1,65 +1,37 @@
-import React, { Component } from 'react'; 
+import React, { useState, useContext, useEffect } from 'react'; 
 import styled from 'styled-components';
 
-export default class ProgressBar extends Component {
+import { SongContext } from '../../context/song.context'; 
 
-    state = {
-        percentThroughSong: 0
-    }; 
+const ProgressBar = () => {
+    const { song } = useContext(SongContext);
+    const [duration, setDuration] = useState(song.duration);
 
-    interval; 
+    const animationInterval = 100;
+    const incrementSlider = animationInterval / (song.duration * 1000); 
+    let timeout;   
 
-    componentDidMount () {
-        this.startSlider();
-    };
+    useEffect(() => {
+        if (song.paused === false){ 
+            timeout = setTimeout(() => {
+                const percent = duration + incrementSlider; 
+                return percent <= 1
+                    ? setDuration(percent)
+                    : clearTimeout(timeout)
+            }, animationInterval);
+        };
+        return () => clearTimeout(timeout);
+    });
 
-    componentWillUnmount(){
-        clearInterval(this.interval);
-    }; 
+    useEffect(() => {
+        clearTimeout(timeout);
+        setDuration(song.currentTime/song.duration); 
+    }, [song.name, song.currentTime])
+        
+    return <Wrapper duration={duration}></Wrapper>;
+};
 
-    componentDidUpdate(prevProps){
-        if (this.props.song === prevProps.song){
-            return; 
-        }
-        clearInterval(this.interval);
-        this.resetSlider();
-        this.startSlider();
-    }
-
-    startSlider = () => {
-        const { song } = this.props; 
-        if (song.paused){
-            return; 
-        }
-
-        const animationInterval = 100;
-        const incrementSlider = animationInterval / (song.duration * 1000); 
-
-        this.interval = setInterval(() => {
-            this.setState({ percentThroughSong: this.state.percentThroughSong + incrementSlider }); 
-        }, animationInterval);
-    }; 
-
-    pauseSlider = () => clearInterval(this.interval);
-    resetSlider = () => {
-        try {
-            const { song } = this.props; 
-            this.setState({ percentThroughSong: song.currentTime / song.duration });
-        }
-        catch(err){
-            console.log(err);
-            this.setState({ percentThroughSong: 0 });
-        }
-    }
-
-
-    render() {
-        const { percentThroughSong } = this.state; 
-        return (
-            <Wrapper percentThroughSong={percentThroughSong}></Wrapper>
-        )
-    }
-}
+export default ProgressBar; 
 
 const Wrapper = styled.div`
     display: block; 
@@ -79,7 +51,7 @@ const Wrapper = styled.div`
         background-color: white;
         border-top-right-radius: 99px;
         border-bottom-right-radius: 99px;
-        transform: ${props => `scaleX(${props.percentThroughSong || 1})`}; 
+        transform: ${props => `scaleX(${props.duration || 1})`}; 
         transform-origin: left;
     }
 `;

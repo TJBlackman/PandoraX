@@ -8,17 +8,23 @@ import Button from '../buttonsAndIcons/Button';
 import sendMessage from '../../utils/sendMessage'
 
 const PlayerControls = () => {
-    const { song } = useContext(SongContext);
+    const { song, clearSong } = useContext(SongContext);
 
     const thumbsDownIcon = song.isThumbsDown ? 'thumbsdownconfirmed' : 'thumbsdown';
     const thumbsUpIcon = song.isThumbsUp ? 'thumpsupconfirmed' : 'thumbsup'
-    const thumbsDown = () => sendMessage({type:'thumbsdown'});
-    const replay = () => sendMessage({type:'replay'});
+    const thumbsDown = () => { 
+        clearSong(); 
+        sendMessage({type:'thumbsdown'}); 
+    }
     const play = () => { sendMessage({type:'play'}) }
     const pause = () => { sendMessage({type:'pause'}) }
-    const next = () => { sendMessage({type:'next'}); }
+    const next = () => { 
+        clearSong(); 
+        sendMessage({type:'next'}); 
+    }
     const thumbsUp = () => { sendMessage({type:'thumbsup'}) }
     const download = () => { sendMessage({type:'download'}) }
+    const replay = () => sendMessage({type:'replay'});
 
 
     return (

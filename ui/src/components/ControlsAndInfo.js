@@ -1,21 +1,19 @@
-import React, { Component } from 'react'; 
+import React from 'react'; 
 import styled from 'styled-components'; 
 
 import ProgressBar from "./playercontrols/ProgressBar";
 import SongInfo from './SongInfo';
 import PlayerControls from "./playercontrols/PlayerControls";
 
-class ControlsAndInfo extends Component {
+const ControlsAndInfo = (props) => {
 
-    render(){
-        return (
-            <Wrapper>
-                <ProgressBar song={this.props.song} />
-                <SongInfo song={this.props.song} />
-                <PlayerControls song={this.props.song} reset={this.props.reset} />
-            </Wrapper>
-        ); 
-    }
+    return (
+        <Wrapper>
+            <ProgressBar />
+            <SongInfo />
+            <PlayerControls />
+        </Wrapper>
+    ); 
 }
 
 export default ControlsAndInfo;

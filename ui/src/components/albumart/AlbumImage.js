@@ -15,7 +15,7 @@ const AlbumSvgSpinner = () => (
 const AlbumImage = () => {
   const { song } = useContext(SongContext);
 
-  let src = song.imgSrc;
+  let src = song.albumArt;
   if (src.length > 0 && src.includes("http") === false) {
     src = "https://www.pandora.com" + src;
   }
