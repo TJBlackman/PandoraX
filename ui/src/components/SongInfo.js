@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 function SongInfo() {
     const { song } = useContext(SongContext);
-    const { album, name, artist } = song;
+    const { album, songName, artist } = song;
     return (
         <Wrapper>
-            <p><label>Song: </label>{name || 'Loading song...'}</p>
+            <p><label>Song: </label>{songName || 'Loading song...'}</p>
             <p><label>Artist: </label>{artist || 'Loading artist...'}</p>
             <p><label>Album: </label>{album || 'Loading album...'}</p>
         </Wrapper>

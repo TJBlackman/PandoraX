@@ -110,7 +110,7 @@ window.addEventListener('load', function(){
 
             return {
                 station: stationName,
-                song: songName,
+                songName: songName,
                 artist: artistName,
                 album: albumName,
                 albumArt: albumArt,

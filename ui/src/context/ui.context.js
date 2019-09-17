@@ -3,7 +3,7 @@ import React, { useState, createContext } from "react";
 export const UIContext = createContext();
 
 const default_context = {
-  menuIsOpen: true
+  menuIsOpen: false
 };
 
 export const UIProvider = ({ children }) => {

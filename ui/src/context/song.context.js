@@ -4,7 +4,7 @@ export const SongContext = createContext();
 
 const default_context = {
   station: "",
-  name: "",
+  songName: "",
   artist: "",
   album: "",
   albumArt: "",

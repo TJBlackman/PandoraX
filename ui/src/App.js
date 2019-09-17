@@ -22,7 +22,8 @@ const App = () => {
     const listener = (request) => {
       switch(request.type){
         case 'new song': {
-          setSong(request.payload); 
+          setSong(request.payload);
+          console.log(request.payload);
           break; 
         }
         default: return null; 

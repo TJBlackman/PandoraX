@@ -7,7 +7,7 @@
     
     "browser_action": {
         "default_title": "Pandora X",
-        "default_popup": "./ui/build/index.html"
+        "default_popup": "./index.html"
     },
 
     "permissions": ["tabs","downloads"],
