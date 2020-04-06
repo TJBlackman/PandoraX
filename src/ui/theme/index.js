@@ -1,20 +1,20 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const Theme = {
   colors: {
-    primary: '#3668ff',
-    secondary: 'rgba(255,255,255,0.33)',
-    white: '#fff',
-    black: '#14171a',
-    background: '#e6ecf0',
-    muted: '#66757f',
-    error: '#b40000',
-    like: '#ee2626',
-    star: '#ff8f00',
-    success: '#229e08'
+    primary: "#3668ff",
+    secondary: "rgba(255,255,255,0.33)",
+    white: "#fff",
+    black: "#14171a",
+    background: "#e6ecf0",
+    muted: "#66757f",
+    error: "#b40000",
+    like: "#ee2626",
+    star: "#ff8f00",
+    success: "#229e08"
   },
   fonts: {
-    primary: 'sans-serif'
+    primary: "sans-serif"
   }
 };
 
@@ -55,6 +55,6 @@ export const GlobalStyles = createGlobalStyle`
     position: relative; 
   }
   p {
-    color: ${(props) => props.theme.colors.black};
+    color: ${props => props.theme.colors.black};
   }
 `;

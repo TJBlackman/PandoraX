@@ -1,61 +1,63 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { SongContext } from '../../contexts/song-context';
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { SongContext } from "../../contexts/song-context";
 
-import { Icon } from '../icon';
-import { sendMessage } from '../../utils/sendMessage';
+import { Icon } from "../icon";
+import { sendMessage } from "../../utils/sendMessage";
 
 export const PlayerControls = () => {
   const { songInfo } = useContext(SongContext);
   return (
     <Wapper>
       <button
-        type='button'
+        type="button"
         onClick={() => {
-          sendMessage({ type: 'thumbsdown' });
+          sendMessage({ type: "thumbsdown" });
         }}
       >
-        <Icon svg={songInfo.isThumbsDown ? 'thumbsdownconfirmed' : 'thumbsdown'} />
+        <Icon
+          svg={songInfo.isThumbsDown ? "thumbsdownconfirmed" : "thumbsdown"}
+        />
       </button>
       <button
-        type='button'
+        type="button"
         onClick={() => {
-          sendMessage({ type: 'replay' });
+          sendMessage({ type: "replay" });
         }}
       >
-        <Icon svg='replay' />
+        <Icon svg="replay" />
       </button>
       <button
-        type='button'
+        type="button"
         onClick={() => {
-          sendMessage({ type: songInfo.paused ? 'play' : 'pause' });
+          sendMessage({ type: songInfo.paused ? "play" : "pause" });
         }}
       >
-        <Icon svg={songInfo.paused ? 'play' : 'pause'} />
+        <Icon svg={songInfo.paused ? "play" : "pause"} />
       </button>
       <button
-        type='button'
+        type="button"
         onClick={() => {
-          sendMessage({ type: 'next' });
+          sendMessage({ type: "next" });
         }}
       >
-        <Icon svg='next' />
+        <Icon svg="next" />
       </button>
       <button
-        type='button'
+        type="button"
         onClick={() => {
-          sendMessage({ type: 'thumbsup' });
+          sendMessage({ type: "thumbsup" });
         }}
       >
-        <Icon svg={songInfo.isThumbsUp ? 'thumpsupconfirmed' : 'thumbsup'} />
+        <Icon svg={songInfo.isThumbsUp ? "thumpsupconfirmed" : "thumbsup"} />
       </button>
       <button
-        type='button'
+        type="button"
         onClick={() => {
-          sendMessage({ type: 'download' });
+          sendMessage({ type: "download" });
         }}
       >
-        <Icon svg='download' />
+        <Icon svg="download" />
       </button>
     </Wapper>
   );

@@ -1,11 +1,11 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { sendMessage } from '../../utils/sendMessage';
+import React, { createContext, useState, useEffect } from "react";
+import { sendMessage } from "../../utils/sendMessage";
 
 const defaultSongContext = {
-  station: 'Loading Station...',
-  songName: 'Loading Song...',
-  artist: 'Loading Artist...',
-  album: 'Loading Album...',
+  station: "Loading Station...",
+  songName: "Loading Song...",
+  artist: "Loading Artist...",
+  album: "Loading Album...",
   albumArt: null,
   volume: 0.5,
   isThumbsUp: false,
@@ -22,7 +22,7 @@ export const SongContext = createContext();
 export const SongContextProvider = ({ children }) => {
   const [songState, setSongState] = useState(defaultSongContext);
 
-  const setSongInfo = (songData) => {
+  const setSongInfo = songData => {
     setSongState({
       ...defaultSongContext,
       ...songData
@@ -35,10 +35,10 @@ export const SongContextProvider = ({ children }) => {
       return undefined;
     }
 
-    const listener = (request) => {
-      console.log('listener', request);
+    const listener = request => {
+      console.log("listener", request);
       switch (request.type) {
-        case 'new song': {
+        case "new song": {
           setSongInfo(request.payload);
           break;
         }
@@ -49,8 +49,8 @@ export const SongContextProvider = ({ children }) => {
 
     window.chrome.runtime.onMessage.addListener(listener);
 
-    sendMessage({ type: 'GET SONG INFO' }, (res) => {
-      if (res === 'not open') {
+    sendMessage({ type: "GET SONG INFO" }, res => {
+      if (res === "not open") {
         setSongState({
           ...songState,
           pandoraNotOpen: true

@@ -1,20 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { Index } from './pages/index';
-import { Settings } from './pages/settings';
+import { Index } from "./pages/index";
+import { Settings } from "./pages/settings";
 
 const AppRouter = () => {
   return (
     <Router>
       <Switch>
-        <Route path='/settings' component={Settings} />
-        <Route path='/' component={Index} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/" component={Index} />
       </Switch>
     </Router>
   );
 };
 
-ReactDOM.render(<AppRouter />, document.getElementById('index'));
+ReactDOM.render(<AppRouter />, document.getElementById("index"));

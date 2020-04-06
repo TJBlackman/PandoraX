@@ -1,12 +1,17 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-import { SongContext } from '../../contexts/song-context';
+import React, { useRef, useState, useContext, useEffect } from "react";
+import styled, { keyframes, css } from "styled-components";
+import { SongContext } from "../../contexts/song-context";
 
-import { sendMessage } from '../../utils/sendMessage';
+import { sendMessage } from "../../utils/sendMessage";
 
 // utility
-const getPercentCompletedAtTargetPosition = (targetPosition, constraintWidth, negateDistanceLeft) => {
-  const percentCompleteAtClick = (targetPosition - negateDistanceLeft) / constraintWidth;
+const getPercentCompletedAtTargetPosition = (
+  targetPosition,
+  constraintWidth,
+  negateDistanceLeft
+) => {
+  const percentCompleteAtClick =
+    (targetPosition - negateDistanceLeft) / constraintWidth;
   return percentCompleteAtClick;
 };
 
@@ -15,7 +20,9 @@ export const ProgressBar = () => {
   const songContext = useContext(SongContext);
   const { currentTime, duration, paused } = songContext.songInfo;
 
-  const [percentCompleted, setPercentCompleted] = useState(currentTime / duration);
+  const [percentCompleted, setPercentCompleted] = useState(
+    currentTime / duration
+  );
   const durationRemaining = duration - duration * percentCompleted;
   const loadingRef = useRef(null);
 
@@ -23,10 +30,14 @@ export const ProgressBar = () => {
     setPercentCompleted(currentTime / duration);
   }, [currentTime, duration]);
 
-  const updateFromClick = (e) => {
+  const updateFromClick = e => {
     // negate 5px left for application border
-    const percentCompletedAtClick = getPercentCompletedAtTargetPosition(e.clientX, loadingRef.current.clientWidth, 5);
-    sendMessage({ type: 'scrub', payload: duration * percentCompletedAtClick });
+    const percentCompletedAtClick = getPercentCompletedAtTargetPosition(
+      e.clientX,
+      loadingRef.current.clientWidth,
+      5
+    );
+    sendMessage({ type: "scrub", payload: duration * percentCompletedAtClick });
     setPercentCompleted(percentCompletedAtClick);
   };
 
@@ -38,12 +49,12 @@ export const ProgressBar = () => {
       ref={loadingRef}
       onClick={updateFromClick}
     >
-      <div className='progress'></div>
+      <div className="progress"></div>
     </Wrapper>
   );
 };
 
-const scale = (percentCompleted) => keyframes`
+const scale = percentCompleted => keyframes`
   from {
     transform: scaleX(${percentCompleted});
   }
@@ -65,20 +76,21 @@ const Wrapper = styled.div`
     overflow: hidden;
 
     &:after {
-      content: '';
+      content: "";
       display: block;
       height: 3px;
       border-radius: 3px;
       cursor: pointer;
-      background-color: ${(props) => props.theme.colors.white};
+      background-color: ${props => props.theme.colors.white};
       transform-origin: left;
-      ${(props) =>
+      ${props =>
         props.paused
           ? css`
               transform: scaleX(${props.percentCompleted});
             `
           : css`
-              animation: ${scale(props.percentCompleted)} ${props.durationRemaining}s linear forwards;
+              animation: ${scale(props.percentCompleted)}
+                ${props.durationRemaining}s linear forwards;
             `}
     }
   }

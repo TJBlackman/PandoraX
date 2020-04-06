@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
+import React, { useContext } from "react";
+import styled from "styled-components";
 
-import { SongContext } from '../../contexts/song-context';
+import { SongContext } from "../../contexts/song-context";
 
-import { AlbumSvgSpinner } from '../album-svg-spinner';
-import { AlbumArtWork } from '../album-art-work';
+import { AlbumSvgSpinner } from "../album-svg-spinner";
+import { AlbumArtWork } from "../album-art-work";
 
 export const AlbumArtContainer = () => {
   const { songInfo } = useContext(SongContext);
@@ -17,7 +17,11 @@ export const AlbumArtContainer = () => {
 
   return (
     <Wrapper>
-      {showAlbum ? <AlbumArtWork img={songInfo.albumArt} /> : <AlbumSvgSpinner openPandora={songInfo.pandoraNotOpen} />}
+      {showAlbum ? (
+        <AlbumArtWork img={songInfo.albumArt} />
+      ) : (
+        <AlbumSvgSpinner openPandora={songInfo.pandoraNotOpen} />
+      )}
     </Wrapper>
   );
 };

@@ -1,20 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-import { ExtensionContainer } from '../components/extension-container';
-import { AlbumArtContainer } from '../components/album-art-container';
-import { ProgressBar } from '../components/progress-bar';
-import { TrackInfoPanel } from '../components/track-info-panel';
-import { PlayerControls } from '../components/player-controls';
-import { Icon } from '../components/icon';
+import { ExtensionContainer } from "../components/extension-container";
+import { AlbumArtContainer } from "../components/album-art-container";
+import { ProgressBar } from "../components/progress-bar";
+import { TrackInfoPanel } from "../components/track-info-panel";
+import { PlayerControls } from "../components/player-controls";
+import { Icon } from "../components/icon";
 
 export const Index = () => (
   <ExtensionContainer>
     <Wrapper>
-      {/* <Link to='/settings' className='setting'>
-        <Icon svg='gear' />
-      </Link> */}
+      <Link to="/settings" className="setting">
+        <Icon svg="gear" />
+      </Link>
 
       <AlbumArtContainer />
       <ProgressBar />

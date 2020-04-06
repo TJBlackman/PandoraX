@@ -1,16 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { AlbumArtContainer } from '../album-art-container';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { AlbumArtContainer } from "../album-art-container";
 
 export const NowPlaying = () => {
   return (
-    <Wrapper to='/'>
+    <Wrapper to="/">
       <h3>
         <span>Now</span>
         <span>Playing</span>
       </h3>
-      <div className='album-art'>
+      <div className="album-art">
         <AlbumArtContainer />
       </div>
     </Wrapper>

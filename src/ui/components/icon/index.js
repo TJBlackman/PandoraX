@@ -1,56 +1,56 @@
-import React from 'react';
+import React from "react";
 
-import Download from './svg/download';
-import Gear from './svg/gear';
-import Thumpsup from './svg/thumbsup';
-import Thumpsupconfirmed from './svg/thumbsupconfirmed';
-import Thumbsdown from './svg/thumbsdown';
-import Thumbsdownconfirmed from './svg/thumbsdownconfirmed';
-import Replay from './svg/replay';
-import Pause from './svg/pause';
-import Play from './svg/play';
-import Next from './svg/next';
+import Download from "./svg/download";
+import Gear from "./svg/gear";
+import Thumpsup from "./svg/thumbsup";
+import Thumpsupconfirmed from "./svg/thumbsupconfirmed";
+import Thumbsdown from "./svg/thumbsdown";
+import Thumbsdownconfirmed from "./svg/thumbsdownconfirmed";
+import Replay from "./svg/replay";
+import Pause from "./svg/pause";
+import Play from "./svg/play";
+import Next from "./svg/next";
 
 export const Icon = ({ svg }) => {
   let SvgIcon;
   switch (svg) {
-    case 'thumbsup': {
+    case "thumbsup": {
       SvgIcon = Thumpsup;
       break;
     }
-    case 'thumpsupconfirmed': {
+    case "thumpsupconfirmed": {
       SvgIcon = Thumpsupconfirmed;
       break;
     }
-    case 'thumbsdown': {
+    case "thumbsdown": {
       SvgIcon = Thumbsdown;
       break;
     }
-    case 'thumbsdownconfirmed': {
+    case "thumbsdownconfirmed": {
       SvgIcon = Thumbsdownconfirmed;
       break;
     }
-    case 'replay': {
+    case "replay": {
       SvgIcon = Replay;
       break;
     }
-    case 'pause': {
+    case "pause": {
       SvgIcon = Pause;
       break;
     }
-    case 'play': {
+    case "play": {
       SvgIcon = Play;
       break;
     }
-    case 'next': {
+    case "next": {
       SvgIcon = Next;
       break;
     }
-    case 'download': {
+    case "download": {
       SvgIcon = Download;
       break;
     }
-    case 'gear': {
+    case "gear": {
       SvgIcon = Gear;
       break;
     }

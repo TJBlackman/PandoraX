@@ -1,23 +1,23 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { ScrollableText } from '../scrollable-text';
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { ScrollableText } from "../scrollable-text";
 
-import { SongContext } from '../../contexts/song-context';
+import { SongContext } from "../../contexts/song-context";
 
 export const TrackInfoPanel = () => {
   const songContext = useContext(SongContext);
   const { songName, album, artist } = songContext.songInfo;
   return (
     <Wrapper>
-      <div className='row'>
+      <div className="row">
         <label>Title:</label>
         <ScrollableText text={songName} />
       </div>
-      <div className='row'>
+      <div className="row">
         <label>Album:</label>
         <ScrollableText text={album} />
       </div>
-      <div className='row'>
+      <div className="row">
         <label>Artist:</label>
         <ScrollableText text={artist} />
       </div>
