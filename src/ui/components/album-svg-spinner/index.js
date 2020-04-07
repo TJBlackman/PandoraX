@@ -77,7 +77,6 @@ const Wrapper = styled.div`
       color: ${props => props.theme.colors.white};
       font-size: 20px;
       padding: 10px;
-      border: 2px solid ${props => props.theme.colors.secondary};
       box-shadow: 2px 2px 6px ${props => props.theme.colors.black};
       /* transition: transform ease-in-out 0.15s; */
 
