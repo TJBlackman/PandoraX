@@ -35,16 +35,16 @@ export const SongContextProvider = ({ children }) => {
       return undefined;
     }
 
-    const listener = request => {
-      console.log("listener", request);
+    const listener = (request, sender, sendResponse) => {
       switch (request.type) {
         case "new song": {
           setSongInfo(request.payload);
           break;
         }
-        default:
-          return null;
+        default: { }
       }
+      sendResponse({});
+      return true;
     };
 
     window.chrome.runtime.onMessage.addListener(listener);
@@ -61,6 +61,11 @@ export const SongContextProvider = ({ children }) => {
         }
       }
     });
+
+    // cleanup
+    return () => {
+      window.chrome.runtime.onMessage.removeListener(listener);
+    };
   }, []);
 
   return (

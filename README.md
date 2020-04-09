@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Pandora X is a chrome extension used to modify the limits of Pandora free accounts, such as limited song skips. It also adds many great utilities, like allowing you to replay songs, scrub through song timelines, and even download songs with song name, artist name, and album name information.
+Pandora X is a Chrome extension used to modify the limits of Pandora free accounts, such as limited song skips. It also adds many great utilities, like allowing you to replay songs, scrub through song timelines, and even download songs with song name, artist name, and album name information.
 
 ## Features
 
@@ -13,12 +13,17 @@ Pandora X is a chrome extension used to modify the limits of Pandora free accoun
 - Scrub Song timeline (via extension UI only)
 - Audio Ad Skipping
 - Video Ad Skipping
+- Super small bundle < 250KB!
 
-> Note: This app does not block advertisements. It detects when Pandora plays you an audio or video ad, and skips immediately to the end of the ad, making Pandora think the ad was played successfully. To block banner ads on the website itself, it is recommended that you run a dedicated dd blocker (we like uBlock Origin).
+> Note: This app does not block advertisements. It detects when Pandora plays you an audio or video ad, and skips immediately to the end of the ad, making Pandora think the ad was played successfully. To block banner ads on the website itself, it is recommended that you run a dedicated ad blocker (we like uBlock Origin).
+
+## Installation
+
+Unfortunately, Chrome wont let this extentsion into their store because there is already a plethora of Pandora extensions. However, most existing extensions are several megabytes in size, while PandoraX is less than 250 KB on disk. To install as a chrome extension, download the build, or run the build step yourself. Then in your Chrome Extension manager (chrome://extensions), you need to enable Developer Mode (toggle in the top right) and then select Load Unpacked (top left). Now simply point to the Pandora X folder.
 
 ## Development
 
-In your terminal, navigate to this projects root directory and run `npm install` to install it's dependancies. You can develop the extension UI just like a react site by running `npm run dev`. You can build a production version that is deposited into a `/dist` folder by running `npm run build`.
+In your terminal, navigate to this project's root directory and run `npm install` to install it's dependancies. You can develop the extension UI just like a react site by running `npm run dev`. You can build a production version that is deposited into a `/dist` folder by running `npm run build`.
 
 To test browser features, you should run the build process, then in your Chrome browser, navigate to chrome://extensions, and enter developer mode (toggle in the top right corner). Click the button that say _Load Unpacked_ (top left corner), then point to the `/dist/` folder you created in your build step. After making changes to the code, run the build step again, and in you Chrome extension manager, click the refresh icon for this extension (you also need to refresh the pandora website).
 
@@ -34,6 +39,7 @@ To test browser features, you should run the build process, then in your Chrome 
 - Song history
 - Customise theme
 - Override Pandora controls to enable unlimited skips via native UI
+- Firefox support
 
 ## Technology & Skills
 

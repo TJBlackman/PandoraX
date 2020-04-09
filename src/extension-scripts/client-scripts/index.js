@@ -1,4 +1,4 @@
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   const extensionId = chrome.runtime.id;
 
   const getLastAudioTag = () =>
@@ -11,7 +11,8 @@ window.addEventListener("load", function() {
         return false;
       }
       const isAd = element.className.includes("nowPlayingTopInfo--audioAd");
-      return isAd;
+      const messageFromPandora = element.querySelector('.Marquee__wrapper__content').innerText === 'Message From';
+      return (isAd || messageFromPandora);
     } catch (err) {
       console.log(err);
       return false;
@@ -19,15 +20,15 @@ window.addEventListener("load", function() {
   };
 
   const PandoraCommands = {
-    skip: function() {
+    skip: function () {
       const audioTag = getLastAudioTag();
       audioTag.currentTime = audioTag.duration;
     },
-    replay: function() {
+    replay: function () {
       const audioTag = getLastAudioTag();
       audioTag.currentTime = 0;
     },
-    scrub: function(time) {
+    scrub: function (time) {
       // in seconds
       const audioTag = getLastAudioTag();
       let target = time;
@@ -39,7 +40,7 @@ window.addEventListener("load", function() {
       }
       audioTag.currentTime = target;
     },
-    volume: function(number) {
+    volume: function (number) {
       // 0 - 1
       const audioTag = getLastAudioTag();
       let target = number;
@@ -51,19 +52,19 @@ window.addEventListener("load", function() {
       }
       audioTag.volume = target;
     },
-    mute: function(boolean) {
+    mute: function (boolean) {
       const audioTag = getLastAudioTag();
       audioTag.muted = boolean;
     },
-    play: function() {
+    play: function () {
       const audioTag = getLastAudioTag();
       audioTag.play();
     },
-    pause: function() {
+    pause: function () {
       const audioTag = getLastAudioTag();
       audioTag.pause();
     },
-    playbackRate: function(speed) {
+    playbackRate: function (speed) {
       // 1 is normal, 1.5 is 150%
       const audioTag = getLastAudioTag();
       audioTag.playbackRate = speed;
@@ -80,7 +81,7 @@ window.addEventListener("load", function() {
         btn.click();
       }
     },
-    download: function() {
+    download: function () {
       let song = {
         songName: "Unknown song",
         artist: "Unknown Artist",
@@ -268,11 +269,12 @@ window.addEventListener("load", function() {
   })();
 
   // extension listener
-  chrome.runtime.onMessage.addListener(function(request, sender) {
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.type) {
       case "GET SONG INFO": {
-        refreshCurrentSongInfo();
-        break;
+        const songData = getSongData();
+        sendResponse(songData);
+        return true;
       }
       case "replay": {
         PandoraCommands.replay();
@@ -310,8 +312,9 @@ window.addEventListener("load", function() {
         PandoraCommands.scrub(request.payload); // time in seconds
         break;
       }
-      default:
-        return null;
+      default: { };
     }
+    sendResponse({});
+    return true;
   });
 });

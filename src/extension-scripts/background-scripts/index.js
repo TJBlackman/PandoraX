@@ -1,13 +1,17 @@
-chrome.runtime.onMessage.addListener(function(request) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.type) {
     case "download this song": {
+      const filename = `Pandora Music/${request.payload.songName} by ${request.payload.artist} on album ${request.payload.album}.m4a`;
+      const strippedFileName = filename.replace(/\:/g, '');
+
       chrome.downloads.download({
         url: request.payload.src,
-        filename: `Pandora Music/${request.payload.songName} by ${request.payload.artist} on album ${request.payload.album}.m4a`,
+        filename: strippedFileName,
         saveAs: false
       });
     }
-    default:
-      return null;
+    default: { }
   }
+  sendResponse({});
+  return true;
 });
