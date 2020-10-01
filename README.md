@@ -19,7 +19,18 @@ Pandora X is a Chrome extension used to modify the limits of Pandora free accoun
 
 ## Installation
 
-Unfortunately, Chrome wont let this extentsion into their store because there is already a plethora of Pandora extensions. However, most existing extensions are several megabytes in size, while PandoraX is less than 250 KB on disk. To install as a chrome extension, download the build, or run the build step yourself. Then in your Chrome Extension manager (chrome://extensions), you need to enable Developer Mode (toggle in the top right) and then select Load Unpacked (top left). Now simply point to the Pandora X folder.
+Unfortunately, Chrome wont let this extentsion into their store because there is already a plethora of Pandora extensions. However, most existing extensions are several megabytes in size, while Pandora X is less than 250 KB on disk. 
+
+To install Pandora X:
+1. In your Chrome browser, navigate to chrome://extensions
+2. In the top-right corner, use the toggle to enter "developer mode"
+3. In the upper-left corner, click the button that reads "Load Unpacked Extension"
+4. Select the Pandora X folder
+
+> Hint: It can be helpful to store the Pandora X extension folder in the same location as other Chrome extensions. See the paths below for default extension locations.
+
+- Windows: `C:\Documents and Settings\<USER_NAME>\Local Settings\Application Data\Google\Chrome\User Data\Default\Extensions`
+- Mac: `~/Library/Application\ Support/Google/Chrome/Default`
 
 ## Development
 
