@@ -4,8 +4,8 @@
   "description": "Make Pandora better with an extension UI and some background scripts.",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --config webpack.develop.js",
-    "build": "webpack --config webpack.production.js"
+    "dev": "webpack-dev-server --open --config configs/webpack.develop.js",
+    "build": "webpack --config configs/webpack.production.js"
   },
   "author": "Trevor Blackman",
   "license": "ISC",

@@ -1,6 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const shared = require('./webpack.shared');
+const Dotenv = require('dotenv-webpack');
 
 process.env.NODE_ENV = 'production';
 
@@ -14,6 +15,11 @@ const development = {
     historyApiFallback: true,
     clientLogLevel: 'warn',
   },
+  plugins: [
+    new Dotenv({
+      path: path.join(__dirname, '.env.develop'),
+    }),
+  ],
 };
 
 module.exports = merge(shared, development);

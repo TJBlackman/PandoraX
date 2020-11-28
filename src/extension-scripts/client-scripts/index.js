@@ -1,23 +1,6 @@
 window.addEventListener('load', function () {
   const extensionId = chrome.runtime.id;
 
-  const getLastAudioTag = () => document.querySelector('body > audio:last-of-type');
-
-  const checkIfIsAd = () => {
-    try {
-      const element = document.querySelector('.nowPlayingTopInfo');
-      if (!element) {
-        return false;
-      }
-      const isAd = element.className.includes('nowPlayingTopInfo--audioAd');
-      const messageFromPandora = element.querySelector('.Marquee__wrapper__content').innerText === 'Message From';
-      return isAd || messageFromPandora;
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
-  };
-
   const PandoraCommands = {
     skip: function () {
       const audioTag = getLastAudioTag();
