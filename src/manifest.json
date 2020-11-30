@@ -11,11 +11,11 @@
   "content_scripts": [
     {
       "matches": ["*://www.pandora.com/*", "*://pandora.com/*"],
-      "js": ["./client-scripts/index.js"]
+      "js": ["client.js"]
     }
   ],
   "background": {
-    "scripts": ["./background-scripts/index.js"],
+    "scripts": ["background.js"],
     "persistent": false
   }
 }

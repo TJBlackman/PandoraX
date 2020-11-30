@@ -17,7 +17,7 @@ const development = {
   },
   plugins: [
     new Dotenv({
-      path: path.join(__dirname, '.env.develop'),
+      path: path.join(__dirname, '.develop.env'),
     }),
   ],
 };

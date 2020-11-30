@@ -3,8 +3,13 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, '../src/ui/index.js'),
+  entry: {
+    ui: path.join(__dirname, '../src/ui/index.js'),
+    client: path.join(__dirname, '../src/client-scripts/index.js'),
+    background: path.join(__dirname, '../src/background-scripts/index.js'),
+  },
   output: {
+    filename: `[name].js`,
     publicPath: '/',
   },
   module: {
@@ -22,19 +27,13 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: path.join(__dirname, '../src/ui/index.html'),
       filename: './index.html',
+      chunks: ['ui'],
+      minify: true,
     }),
     new CopyPlugin([
       {
-        from: path.join(__dirname, '../src/extension-configs'),
+        from: path.join(__dirname, '../src/manifest.json'),
         to: path.join(__dirname, '../dist'),
-      },
-      {
-        from: path.join(__dirname, '../src/extension-scripts/background-scripts'),
-        to: path.join(__dirname, '../dist/background-scripts'),
-      },
-      {
-        from: path.join(__dirname, '../src/extension-scripts/client-scripts'),
-        to: path.join(__dirname, '../dist/client-scripts/'),
       },
     ]),
   ],

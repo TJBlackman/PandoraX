@@ -1,4 +1,4 @@
-import { getLastAudioTag } from './get-last-audio-tag';
+export const getLastAudioTag = () => document.querySelector('body > audio:last-of-type');
 
 export const skipSong = () => {
   const audioTag = getLastAudioTag();
