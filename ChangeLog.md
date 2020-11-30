@@ -1,10 +1,13 @@
 # Pandora X Change Log
 
+## 1.1.0
+
+- Replace native skip with unlimited skip
+- Replace native replay with unlimited replay
+- Client scripts now uses ES6 import modules
+- Webpack enabled .env feature flags
+
 ## 1.0.0
-
-First build. Front panel UI only, no settings panel.
-
-#### Features
 
 - Unlimited Skips (via extension UI only)
 - Song Replays (via extension UI only)

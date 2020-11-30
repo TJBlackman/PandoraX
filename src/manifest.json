@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Pandora X",
-  "version": "1.0.0",
-  "description": "Pandora X is a chrome extension used to modify the limits of Pandora free accounts.",
+  "version": "1.1.0",
+  "description": "Pandora X is a browser extension used to extend the limits of Pandora free accounts.",
   "browser_action": {
     "default_title": "Pandora X",
     "default_popup": "./index.html"

@@ -6,8 +6,8 @@ Pandora X is a Chrome extension used to modify the limits of Pandora free accoun
 
 ## Features
 
-- Unlimited Skips (via extension UI only)
-- Song Replays (via extension UI only)
+- Unlimited Song Skips
+- Song Song Replays
 - Song Downloads (via extension UI only)
 - Thumbs Up and Down
 - Scrub Song timeline (via extension UI only)
@@ -15,13 +15,14 @@ Pandora X is a Chrome extension used to modify the limits of Pandora free accoun
 - Video Ad Skipping
 - Super small bundle < 250KB!
 
-> Note: This app does not block advertisements. It detects when Pandora plays you an audio or video ad, and skips immediately to the end of the ad, making Pandora think the ad was played successfully. To block banner ads on the website itself, it is recommended that you run a dedicated ad blocker (we like uBlock Origin).
+> Note: This app does not block advertisements. It detects when Pandora plays you an audio or video ad, and skips immediately to the end of the ad, making Pandora think the ad was played successfully. To block banner ads on the website itself, it is recommended that you run a dedicated ad blocker (I like uBlock Origin).
 
 ## Installation
 
-Unfortunately, Chrome wont let this extentsion into their store because there is already a plethora of Pandora extensions. However, most existing extensions are several megabytes in size, while Pandora X is less than 250 KB on disk. 
+Unfortunately, Chrome wont let this extentsion into their store because there is already a plethora of Pandora extensions. However, most existing extensions are several megabytes in size, while Pandora X is less than 250 KB on disk.
 
 To install Pandora X:
+
 1. In your Chrome browser, navigate to chrome://extensions
 2. In the top-right corner, use the toggle to enter "developer mode"
 3. In the upper-left corner, click the button that reads "Load Unpacked Extension"
